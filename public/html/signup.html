@@ -1,0 +1,53 @@
+<html ng-app="canvass">
+<head>
+	<title>Sign Up</title>
+	<script type="text/javascript" src="javascripts/canvass.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+	<img class="uimg" src="../images/5.jpg">				<!-- under-layer image -->
+
+	<div>
+		<nav class="navbar navbar-inverse col-md-12">
+			<div class="container-fluid">
+				<div class="navbar-header col-md-2">
+					<a class="navbar-brand" href="#/">Open Canvass</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<div id="main1">
+
+		<div id="regform">
+
+			<center><h1>User Registration</h1></center>
+
+			<form name="regform" ng-submit="newUser()">
+
+				<div class="form-group">
+				  <input type="text" ng-model="regUser.fname" class="form-control" placeholder="First name" required/>
+			  	</div>
+
+				<div class="form-group">
+					<input type="text" ng-model="regUser.lname" class="form-control" placeholder="Last name" required/>
+				</div>
+
+				<div class="form-group">
+					<input type="email" ng-model="regUser.email" class="form-control" placeholder="Email ID" required/>
+				</div>
+
+				<div class="form-group">
+					<input type="password" ng-model="regUser.pwd" class="form-control" placeholder="Password" required/>
+				</div>
+
+				<div class="form-group">
+					<input type="password" ng-model="regUser.confirmpwd" class="form-control" placeholder="Confirm Password" required/>
+				</div>
+
+				<button type="submit" class="btn btn-success">Register</button>
+
+			</form>
+		</div>
+	</div>
+
+</html>

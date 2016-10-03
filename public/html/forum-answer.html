@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Canvass</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/overhang.min.css" />
+  <script type="text/javascript" src="../javascripts/overhang.min.js"></script>
+  <link rel="stylesheet" href="../css/forum.css">
+</head>
+
+<div ng-controller="userController as main">
+<div id="container" ng-init="quesDetails();answerActive();">
+  <div class="row">
+    <nav class="navbar navbar-inverse col-md-12">
+      <div class="container-fluid">
+        <div class="navbar-header col-md-2">
+          <a class="navbar-brand" href="#/forum">Open Canvass</a>
+        </div>
+
+        <div class="col-md-10">
+          <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
+            <li>Welcome {{test}}</li>
+            <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div id="custom-search-input">
+      <div class="input-group col-md-11">
+        <input type="text" class="search-query form-control" ng-model="searchBar.question" placeholder="Share Your Thoughts..." />
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="button" ng-click="postQuestion();reloadRoute();">
+            Post Question
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="navbar navbar-inverse navbar-fixed-left ">
+        <ul class="nav navbar-nav col-sm-3">
+          <li ng-class="{active: isNav(1)}"><a href="#/forum"><span class="glyphicon glyphicon-list-alt"></span> Read</a></li>
+          <li ng-class="{active: isNav(2)}"><a href="#/answer"><span class="glyphicon glyphicon-pencil"></span> Answer</a></li>
+          <li ng-class="{active: isNav(3)}"><a href="#/forum"><span class="glyphicon glyphicon-user"></span> Your Content</a></li>
+          <li ng-class="{active: isNav(4)}"><a href="#/forum"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-sm-8">
+      <div id="content">
+
+        <article class="art1" ng-repeat="user in main.forumDetails"  ng-controller="panelController as pane">
+          <div class="art-header">
+            <span class="question">Asked By {{user.firstName+' '+user.lastName}} on {{user.postedDate}}</span>
+            <h3 class="title">
+              <span class="glyphicon glyphicon-question-sign"></span>
+              {{user.question}}
+            </h3>
+          </div>
+          <div ng-show="pane.isSelected(1)">
+              <textarea rows="4" ng-model="pane.ansForm" class="form-control" cols="50" placeholder="Post your answer here" form="usrform"></textarea>
+              <button type="button" ng-click="pane.answer(user.questionId)" class="btn btn-info">Post</button>
+              <a href="#/answer" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
+          </div>
+          <div class="col-md-3" ng-hide="pane.isSelected(1)">
+            <a href="#/answer" ng-click="pane.setTab(1)" class="article-support">Answer <span class="glyphicon glyphicon-edit" id="rating"></span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <p>Open Canvass &copy 2016-2020</p>
+</div>
+</html>

@@ -1,0 +1,59 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+  <div class="container" ng-init="getAllUsers()">
+    <div class="row">
+      <nav class="navbar navbar-inverse col-md-12">
+        <div class="container-fluid">
+          <div class="navbar-header col-md-2">
+            <a class="navbar-brand" href="#/admin">Open Canvass</a>
+          </div>
+
+          <div class="col-md-10">
+            <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
+              <li>Welcome admin</li>
+              <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="col-md-12">
+        <h2>Registered Users</h2>
+        <div class="table-responsive">
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Delete</th>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="user in users">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td><a href="#/admin" ng-click="deleteUser(user.email)" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></a></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="clearfix"></div>
+          <ul class="pagination pull-left">
+            <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <a href="#/forum" class="centralised btn btn-success">GO TO FORUM</a>
+    </div>
+  </div>
+</html>

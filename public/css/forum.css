@@ -1,0 +1,177 @@
+.header h2 {
+  color: #FC5130;
+  font-variant: small-caps;
+  font-style: bold;
+  font-family: fantasy;
+  background: grey;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.active {
+  background: white;
+  border-radius: 5px;
+}
+
+.block {
+  box-shadow: 7px 7px 7px #de2314;
+}
+
+welcome {
+  float: right;
+  color: white;
+}
+
+.title {
+  font-size: 20px;
+}
+
+body {
+  text-align: justify;
+  background: #CBD2D0;
+}
+
+hr.style1{
+	border-top: 1px solid black;
+}
+
+.row {
+  margin:auto;
+}
+
+a.navbar-brand {
+  font-variant: small-caps;
+  font-family: cursive;
+  background-color: #0A2E36;
+  color: #0A2E36;
+}
+
+
+#custom-search-input {
+  margin: 10px;
+  padding: 0;
+}
+
+
+.navbar-fixed-left {
+  border-radius: 5px;
+  height: 50%;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+  float: none;
+  width: 120px;
+  color: white;
+}
+
+.navbar-fixed-left .navbar-nav > li a {
+	color: white;
+	padding: 10px 2px;
+	height: 40px;
+  width:100%;
+  margin:10px;
+}
+
+.navbar-fixed-left .navbar-nav > li a:hover,.navbar-fixed-left .navbar-nav > li a.active {
+	background: #efeadd;
+	color: red;
+	border-radius: 5px;
+  width: 100%;
+  height: 40px;
+}
+
+
+
+.main {
+  background: #3C6E71;
+}
+
+
+.main #content{
+	content: overflow;
+}
+
+
+a {
+	text-decoration: none;
+	color:blue;
+}
+
+a:hover {
+	color: green;
+}
+
+h2 {
+	color: black;
+}
+
+.clr {
+	clear: both;
+}
+
+
+#content article {
+	background: #ffffff;
+	border-radius: 5px;
+	overflow: auto;
+	padding: 10px 20px;
+	margin-top: 10px;
+}
+
+.art-header {
+  padding: 10px 0;
+}
+
+.art-header .answer{
+	color: #000000;
+	font-weight: bold;
+}
+
+#userpic {
+  height: 5%;
+  width: 5%;
+}
+
+.post, .question {
+  font-size: 12px;
+  color: #6D696A;
+  padding-left: 38px;
+  font-style: italic;
+}
+
+#content span #rating {
+	color: #000000;
+  font-style: oblique;
+  background-color: black;
+  color: red;
+  width: 22px;
+}
+
+#content a.article-support {
+	color: #ffffff ;
+	background: #3891A6;
+	border-radius: 5px;
+	padding: 5px 10px;
+  text-decoration: none;
+}
+
+#content a.article-support:hover {
+	background: #033F63;
+}
+
+.form-inline, textarea {
+  margin: 10px;
+}
+
+.comments {
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #dde1e4;
+  color: #112633;
+  padding: 5px;
+  box-shadow: 7px 7px 7px #e7e5df;
+}
+
+.icons {
+  padding-top: 10px;
+}

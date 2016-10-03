@@ -1,0 +1,182 @@
+body {
+	font-size: 20px;
+	font-family: arial, sans-serif;
+	text-align: left;
+	line-height: 1em;
+	margin:0;
+}
+
+h1 {
+	font-variant: small-caps;
+	font-style: bold;
+	text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+	margin:0;
+}
+
+.uimg {
+	z-index:-1;			/*By giving -1 value, this image will be the bottom layer*/
+	opacity: 1;
+	margin:0;
+	width:100%;
+	height:100%;
+	position:fixed;
+}
+
+.top-container {
+	background: #FEFEFF;
+	opacity: 0.8;
+	margin-bottom:30px;
+	width:100%;
+	height:15%;
+}
+
+.top-container h1 {
+	font-size: 400%;
+	height:100%;
+	padding-left: 27%;
+}
+
+#logo {
+	float:left;
+	width:10%;
+	height:100%;
+}
+
+
+
+/*For INDEX.html*/
+
+#start{
+	width: 90%;
+	height: 50%;
+	padding-left: 10%;
+
+	clear: both;
+}
+
+#start #signup {
+	width: 40%;
+	height: 50%;
+	float: left;
+}
+
+#motto {
+	width: 40%;
+	height: 50%;
+	float: left;
+}
+
+#motto h1 {
+	font-size: 40px;
+	padding-left: 25%;
+	padding-top: 12%;
+	transform: rotate(3deg);
+	text-shadow: 1px 1px 1px #000, 3px 3px 5px grey;
+}
+
+
+#signup input[type=submit] {
+	width: 30%;
+	height: 50px;
+	font-weight: bold;
+	font-size: 95%;
+	border-radius: 8px;
+	background-color: #2158AF;
+	border: 1px solid #2158AF;
+	color: #ffffff;
+}
+
+#signup a {
+	width: 30%;
+	height: 50px;
+	font-weight: bold;
+	font-size: 95%;
+	border-radius: 8px;
+	background-color: #2158AF;
+	border: 1px solid #2158AF;
+	color: #ffffff;
+}
+
+#signup input[type=submit]:hover {
+	background: #2158AF;
+	cursor: pointer;
+	border-color: #2158AF;
+	width: 40%;
+	transition: 1s;
+}
+
+.main1 {
+	width:90%;
+	height:75%;
+	margin:0 auto;
+}
+
+#regform {
+	background: rgba(255,255,255,0.7);
+	opacity: 1;
+	padding-top:20px;
+	padding-left: 40px;
+	width: 45%;
+	height: 65%;
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+	margin: 0 auto;
+}
+
+#logform {										/*For LOGIN.html*/
+	background: rgba(255,255,255,0.7);
+	opacity: 1;
+	padding-top:20px;
+	padding-left: 40px;
+	width: 45%;
+	height: 50%;
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+	margin: 0 auto;
+}
+
+
+form input[type=submit] {
+	width: 20%;
+	height: 50px;
+	font-weight: bold;
+	font-size: 95%;
+	border-radius: 8px;
+	background-color: #2158AF;
+	border: 1px solid #2158AF;
+	color: #ffffff;
+}
+
+form input[type=submit]:hover {
+	background: green;
+	cursor: pointer;
+	border-color: green;
+	width: 40%;
+	transition: 1s;
+}
+
+
+.footer {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2px;
+  background-color: #262626;
+  text-align: center;
+
+    clear: both;
+}
+
+.footer1 {
+  position: absolute;;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2px;
+  background-color: #262626;
+  text-align: center;
+}
+
+.footer p, .footer1 p{
+  padding: 2px;
+	color: #FEFEFF;
+}

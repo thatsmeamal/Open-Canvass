@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Canvass</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="../css/forum.css">
+</head>
+
+<div ng-controller="userController as main">
+  <div id="container" ng-init="quesDetails();readActive();">
+    <div class="row">
+      <nav class="navbar navbar-inverse col-md-12">
+        <div class="container-fluid">
+          <div class="navbar-header col-md-2">
+            <button class="navbar-brand" ng-click="whereTo()">Open Canvass</button>
+          </div>
+
+          <div class="col-md-10">
+            <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
+              <li>Welcome </li>
+              <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div id="custom-search-input">
+          <div class="input-group col-md-11">
+            <input type="text" class="search-query form-control" ng-model="searchBar.question" placeholder="Share Your Thoughts..." />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="button" ng-click="postQuestion();reloadRoute()">
+                Post Question
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="navbar navbar-inverse navbar-fixed-left ">
+            <ul class="nav navbar-nav col-sm-3">
+              <li ng-class="{active: isNav(1)}"><a href="#/forum"><span class="glyphicon glyphicon-list-alt"></span> Read</a></li>
+              <li ng-class="{active: isNav(2)}"><a href="#/answer"><span class="glyphicon glyphicon-pencil"></span> Answer</a></li>
+              <li ng-class="{active: isNav(3)}"><a href="#/forum"><span class="glyphicon glyphicon-user"></span> Your Content</a></li>
+              <li ng-class="{active: isNav(4)}"><a href="#/forum"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-8">
+          <div id="content">
+            <div ng-repeat="forum in main.ansData">
+              <article class="art1"  class="block">
+                <div class="art-header">
+                  <span class="question">Asked By {{forum.quesFname+' '+forum.quesLname}} on {{forum.quesDate}}</span>
+                  <h3 class="title">
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                    {{forum.question}}
+                  </h3>
+
+                  <div ng-repeat="info in forum.ans" style="margin:20px;">
+                    <div style="width:100%">
+                    <img id="userpic" src="../images/user.png"/>
+                    <span class="answer">{{info.ansFname+' '+info.ansLname}}</span>
+                    <div class="post">
+                      Written on {{info.ansDate}}
+                    </div>
+                  </div>
+                    <p style="padding:10px;">{{info.answer}}</p>
+
+                    <div class="col-md-12">
+                      <a href="#/forum" ng-click="main.like(info.answer);reloadRoute();" class="article-support"><span class="glyphicon glyphicon-thumbs-up" id="rating"></span> {{info.likes}}</a>
+
+                      <a href="#/forum" ng-click="main.dislike(info.answer);reloadRoute();" class="article-support"><span class="glyphicon glyphicon-thumbs-down" id="rating"></span></a>
+
+                      <div class="icons" ng-controller="panelController as pane" class="col-md-6">
+                        <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support"><span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}</a>
+                        <a  href="#/forum" ng-click="pane.setDetails(info.answer)" class="article-support" ><span class="glyphicon glyphicon-edit" id="rating"></span></a>
+                        <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail);reloadRoute();" class="article-support" ><span class="glyphicon glyphicon-trash" id="rating"></span></a>
+
+                        <div ng-show="pane.isSelected(1)">
+                          <textarea rows="4" ng-model="pane.editForm" class="form-control" cols="50" placeholder="Edit your answer"></textarea>
+                          <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail);reloadRoute();" class="btn btn-info">Post</button>
+                          <a href="#/forum" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
+                        </div>
+
+                        <div ng-show="pane.commentsSelected(1)">
+                          <div ng-repeat="comms in info.ansComments">
+                            <div class="comments">
+                              <img id="userpic" src="../images/user.png"/>
+                              <span>{{comms.name+" says:"}}</span>
+                              <div class="post">
+                                {{comms.date}}
+                              </div>
+                              <p>{{comms.comment}}</p>
+                            </div>
+                          </div>
+                          <form class="form-inline" role="form">
+                              <div class="form-group">
+                                  <input class="form-control" type="text" ng-model="pane.comment" placeholder="Your comments" />
+                              </div>
+                              <div class="form-group">
+                                  <button ng-click="pane.addComment(info.answer);reloadRoute();" class="btn btn-primary">Add</button>
+                                  <button ng-click="pane.setCommentsTab(0)" class="btn btn-default">Cancel</button>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                      </div>
+                      <br><br>
+                    </div>
+
+                  </article>
+                  <hr class="style1">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Open Canvass &copy 2016-2020</p>
+      </div>
+      </html>
