@@ -36,7 +36,7 @@
           <div class="input-group col-md-11">
             <input type="text" class="search-query form-control" ng-model="searchBar.question" placeholder="Share Your Thoughts..." />
             <span class="input-group-btn">
-              <button class="btn btn-danger" type="button" ng-click="postQuestion();reloadRoute()">
+              <button class="btn btn-danger" type="button" ng-click="postQuestion()">
                 Post Question
               </button>
             </span>
@@ -87,7 +87,7 @@
                       <div class="icons" ng-controller="panelController as pane" class="col-md-6">
                         <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support"><span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}</a>
                         <a  href="#/forum" ng-click="pane.setDetails(info.answer)" class="article-support" ><span class="glyphicon glyphicon-edit" id="rating"></span></a>
-                        <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail);reloadRoute();" class="article-support" ><span class="glyphicon glyphicon-trash" id="rating"></span></a>
+                        <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail,forum.question)" class="article-support" ><span class="glyphicon glyphicon-trash" id="rating"></span></a>
 
                         <div ng-show="pane.isSelected(1)">
                           <textarea rows="4" ng-model="pane.editForm" class="form-control" cols="50" placeholder="Edit your answer"></textarea>

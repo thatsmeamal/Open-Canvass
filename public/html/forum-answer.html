@@ -39,7 +39,7 @@
       <div class="input-group col-md-11">
         <input type="text" class="search-query form-control" ng-model="searchBar.question" placeholder="Share Your Thoughts..." />
         <span class="input-group-btn">
-          <button class="btn btn-danger" type="button" ng-click="postQuestion();reloadRoute();">
+          <button class="btn btn-danger" type="button" ng-click="postQuestion()">
             Post Question
           </button>
         </span>
@@ -64,9 +64,9 @@
     <div class="col-sm-8">
       <div id="content">
 
-        <article class="art1" ng-repeat="user in main.forumDetails"  ng-controller="panelController as pane">
+        <article class="art1" ng-repeat="user in main.ansData"  ng-controller="panelController as pane">
           <div class="art-header">
-            <span class="question">Asked By {{user.firstName+' '+user.lastName}} on {{user.postedDate}}</span>
+            <span class="question">Asked By {{user.quesFname+' '+user.quesLname}} on {{user.quesDate}}</span>
             <h3 class="title">
               <span class="glyphicon glyphicon-question-sign"></span>
               {{user.question}}

@@ -7,6 +7,8 @@ var QuestionSchema = new Schema({
     unique: true
   },
   userId: String,
+  firstName: String,
+  lastName: String,
   email: String,
   postedDate: String
 });

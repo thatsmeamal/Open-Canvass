@@ -15,9 +15,11 @@ app.controller('adminController',['$http','$scope','$window','$location', functi
     if(confirm("Are you sure ?")) {
       $http.post('/deleteuser',temp).then(function(status) {
         if(status.data === "error") {
-          alert('User could not be deleted');
+          bootbox.alert('User could not be deleted');
         } else {
-          alert('User deleted successfully ');  }
+          bootbox.alert('User deleted successfully ');
+          $scope.getAllUsers();
+        }
         });
       }
     };

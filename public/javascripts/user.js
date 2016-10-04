@@ -116,11 +116,15 @@ router.post('/dislike', function (req, res){
 	});
 });
 
-router.post('/delete', function (req, res){
+router.post('/deletepost', function (req, res){
 	deletePost(req.body).then(function(data){
-		res.send("success");
-	},function(e){
-		console.log(e.message);
+		getQuesId(req.body).then(function(ansData){
+			res.send(ansData);
+		},function(e){
+			console.log(e.message);
+			res.send("error");
+	})},function(es){
+		console.log(es.message);
 		res.send("error");
 	});
 });
@@ -192,7 +196,8 @@ var check = function(logParam) {
 
 var saveQues = function(quesParam) {
 	var postQues = new Question({question: quesParam.question, userId: quesParam.userId,
-		email: quesParam.email, postedDate: quesParam.postedDate});
+		firstName: quesParam.firstName, lastName: quesParam.lastName, email: quesParam.email,
+		postedDate: quesParam.postedDate});
 	return postQues.saveAsync();
 }
 
@@ -238,7 +243,12 @@ var dislike = function(temp) {
 };
 
 var deletePost = function(user) {
-	return Answer.removeAsync({answer: user.answer});
+	Answer.removeAsync({answer: user.answer});
+	return Answer.findAsync();
+};
+
+var getQuesId = function(temp) {
+	return Question.findAsync({question:temp.question},{_id:1});
 };
 
 var editAnswer = function(answer) {
