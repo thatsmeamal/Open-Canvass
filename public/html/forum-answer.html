@@ -74,8 +74,8 @@
           </div>
           <div ng-show="pane.isSelected(1)">
               <textarea rows="4" ng-model="pane.ansForm" class="form-control" cols="50" placeholder="Post your answer here" form="usrform"></textarea>
-              <button type="button" ng-click="pane.answer(user.questionId)" class="btn btn-info">Post</button>
-              <a href="#/answer" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
+              <button type="button" ng-click="pane.answer(user.questionId)" class="btn btn-success">Post</button>
+              <a href="#/answer" type="button" ng-click="pane.setTab(0)" class="btn btn-danger">Cancel</a>
           </div>
           <div class="col-md-3" ng-hide="pane.isSelected(1)">
             <a href="#/answer" ng-click="pane.setTab(1)" class="article-support">Answer <span class="glyphicon glyphicon-edit" id="rating"></span></a>

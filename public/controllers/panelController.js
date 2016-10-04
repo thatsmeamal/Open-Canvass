@@ -1,5 +1,7 @@
-app.controller('panelController', ['$http','$scope','$location', function($http,$scope,$location){
+app.controller('panelController', ['$http','$scope','$location','dataService', function($http,$scope,$location,dataService){
   panel = this;
+
+  panel.q = 5;
 
   this.editForm = '';
 
@@ -14,6 +16,7 @@ app.controller('panelController', ['$http','$scope','$location', function($http,
   this.comment = '';
 
   this.cancel = function() {
+    this.comment = '';
     this.ansForm = '';
     this.tab = 0;
     this.commentsTab = 0;
@@ -35,6 +38,7 @@ app.controller('panelController', ['$http','$scope','$location', function($http,
   this.setCommentsTab = function(s,answer){
     this.commentsTab = s;
     this.tab = 0;
+    this.comment = '';
   };
 
 
@@ -48,7 +52,7 @@ app.controller('panelController', ['$http','$scope','$location', function($http,
 
   this.answer = function(qid) {
     if(this.ansForm === '') {
-      alert("Blank post !!!");
+      bootbox.alert("Blank post !!!");
     } else {
       this.ansDetails = {
         answer: this.ansForm,
@@ -60,9 +64,9 @@ app.controller('panelController', ['$http','$scope','$location', function($http,
       };
       $http.post('/answer',this.ansDetails).then(function(status){
         if(status.data === "success") {
-          alert('Post was successfull');
+          bootbox.alert('Post was successfull');
         } else {
-          alert('Sorry !!! Answer could not be posted');
+          bootbox.alert('Sorry !!! Answer could not be posted');
         }
       });
     }
@@ -84,7 +88,7 @@ this.getComments = function(ans) {
 };
 
 
-this.addComment = function(ans) {
+this.addComment = function(ans,main) {
   var temp = {
     name: localStorage.userName+' '+localStorage.lastName,
     date: todaysDate(),
@@ -98,9 +102,13 @@ this.addComment = function(ans) {
         if(status.data === 'error') {
           alert('Sorry !!! Comment could not be added');
         } else {
-          alert('Comment added successfully');
+          bootbox.alert("Comment added");
+          dataService.commentObj = status.data[0].comments;
+          main.displayComments(ans,dataService.commentObj);
         }
+
   });
+  this.comment = '';
   this.cancel();
   }
 };
@@ -112,7 +120,7 @@ this.addComment = function(ans) {
     this.commentsTab = 0;
   };
 
-  this.editAnswer = function(currentValue,newValue,ansMail) {
+  this.editAnswer = function(currentValue,newValue,ansMail,main) {
     var temp = {
       old: currentValue,
       new: newValue,
@@ -120,16 +128,22 @@ this.addComment = function(ans) {
     };
     if(localStorage.email === temp.mail || localStorage.email === "admin@admin.com") {
       $http.post('/editAnswer',temp).then(function(status){
-        alert('Edit was successfull');
+        bootbox.alert('Edit was successfull');
+        main.EditedAnswer(currentValue,newValue);
       });
       this.tab = 0;
     } else {
-			alert("You do not have the permission to edit this post")
+			bootbox.alert("You do not have the permission to edit this post")
 		}
   };
 
 }]);
 
+app.service('dataService', function() {
+  // public API
+    this.commentObj= null;
+    this.answerObj = null;
+});
 
 var todaysDate = function() {
   var m_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

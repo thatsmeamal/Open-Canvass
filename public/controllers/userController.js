@@ -1,6 +1,6 @@
 var app = angular.module('canvass', ['ngRoute']);
 
-app.controller('userController',['$http','$scope','$window','$location', function($http,$scope,$window,$location){
+app.controller('userController',['$http','$scope','$window','$location','dataService', function($http,$scope,$window,$location,dataService){
 	var cntlr = this;
 
 	cntlr.nav = 0;
@@ -219,7 +219,7 @@ app.controller('userController',['$http','$scope','$window','$location', functio
 							$scope.ansItem = {};
 							$scope.ansItem["answer"] = status.data[j].answer;
 							$scope.ansItem["ansMail"] = status.data[j].email;
-							for(k=0;k<$scope.size;k++) {
+							for(k=0;k<$scope.users.length;k++) {
 								if($scope.users[k].email === status.data[j].email) {
 									$scope.ansItem["ansFname"] = $scope.users[k].firstName;
 									$scope.ansItem["ansLname"] = $scope.users[k].lastName;
@@ -243,8 +243,16 @@ app.controller('userController',['$http','$scope','$window','$location', functio
 		var temp = {
 			answer: ans
 		};
+		var i = 0,
+				j = 0;
 		$http.post('/like',temp).then(function(status) {
-			console.log(status);
+			for(i=0;i<cntlr.ansData.length;i++) {
+				for(j=0;j<cntlr.ansData[i].ans.length;j++){
+					if(temp.answer === cntlr.ansData[i].ans[j].answer) {
+						cntlr.ansData[i].ans[j].likes = status.data[0].likes;
+					}
+				}
+			}
 		});
 	};
 
@@ -252,9 +260,37 @@ app.controller('userController',['$http','$scope','$window','$location', functio
 		var temp = {
 			answer: ans
 		};
+		var i = 0,
+				j = 0;
 		$http.post('/dislike',temp).then(function(status) {
-			console.log(status);
+			for(i=0;i<cntlr.ansData.length;i++) {
+				for(j=0;j<cntlr.ansData[i].ans.length;j++){
+					if(temp.answer === cntlr.ansData[i].ans[j].answer) {
+						cntlr.ansData[i].ans[j].likes = status.data[0].likes;
+					}
+				}
+			}
 		});
+	};
+
+	this.displayComments = function(answer,data) {
+		for(i=0;i<cntlr.ansData.length;i++) {
+			for(j=0;j<cntlr.ansData[i].ans.length;j++){
+				if(answer === cntlr.ansData[i].ans[j].answer) {
+					cntlr.ansData[i].ans[j].ansComments = data;
+				}
+			}
+		}
+	};
+
+	this.EditedAnswer = function(oldAns,newAns) {
+		for(i=0;i<cntlr.ansData.length;i++) {
+			for(j=0;j<cntlr.ansData[i].ans.length;j++){
+				if(oldAns === cntlr.ansData[i].ans[j].answer) {
+					cntlr.ansData[i].ans[j].answer = newAns;
+				}
+			}
+		}
 	};
 
 	cntlr.delete = function(ans,email) {
@@ -278,7 +314,6 @@ app.controller('userController',['$http','$scope','$window','$location', functio
 			alert("You do not have the permission to delete")
 		}
 	};
-
 
 	$scope.reloadRoute = function() {
 	   $window.location.reload();

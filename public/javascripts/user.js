@@ -100,7 +100,7 @@ router.get('/users', function (req, res){
 
 router.post('/like', function (req, res){
 	like(req.body).then(function(data){
-		res.send("success");
+		res.send(data);
 	},function(e){
 		console.log(e.message);
 		res.send("error");
@@ -109,7 +109,7 @@ router.post('/like', function (req, res){
 
 router.post('/dislike', function (req, res){
 	dislike(req.body).then(function(data){
-		res.send("success");
+		res.send(data);
 	},function(e){
 		console.log(e.message);
 		res.send("error");
@@ -127,7 +127,7 @@ router.post('/delete', function (req, res){
 
 router.post('/editAnswer', function (req, res){
 	editAnswer(req.body).then(function(data){
-		res.send("success");
+		res.send(data);
 	},function(e){
 		console.log(e.message);
 		res.send("error");
@@ -145,7 +145,6 @@ router.post('/getcomments', function (req, res){
 
 router.post('/addcomment', function (req, res){
 	addComment(req.body).then(function(data){
-		console.log(data);
 		res.send(data);
 	},function(e){
 		console.log(e.message);
@@ -223,17 +222,19 @@ var getAnswers = function() {
 };
 
 var like = function(temp) {
-	return Answer.updateAsync(
+	Answer.updateAsync(
 		{answer:temp.answer},
 		{$inc:{likes:1}}
 	);
+	return Answer.findAsync({answer:temp.answer});
 };
 
 var dislike = function(temp) {
-	return Answer.updateAsync(
+	Answer.updateAsync(
 		{answer:temp.answer},
 		{$inc:{likes:-1}}
 	);
+	return Answer.findAsync({answer:temp.answer});
 };
 
 var deletePost = function(user) {
@@ -241,10 +242,11 @@ var deletePost = function(user) {
 };
 
 var editAnswer = function(answer) {
-	return Answer.updateAsync(
+	Answer.updateAsync(
 		{answer: answer.old},
 		{answer: answer.new}
 	);
+	return Answer.findAsync({answer:answer.new});
 };
 
 var addComment = function(temp) {
@@ -253,10 +255,11 @@ var addComment = function(temp) {
 		date: temp.date,
 		comment: temp.comment
 	};
-	return Answer.updateAsync(
+	Answer.updateAsync(
 		{answer: temp.answer},
 		{$push: {comments: commentData}}
 	);
+	return Answer.findAsync({answer:temp.answer});
 };
 
 var getComments = function(temp) {

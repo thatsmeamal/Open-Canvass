@@ -80,9 +80,9 @@
                     <p style="padding:10px;">{{info.answer}}</p>
 
                     <div class="col-md-12">
-                      <a href="#/forum" ng-click="main.like(info.answer);reloadRoute();" class="article-support"><span class="glyphicon glyphicon-thumbs-up" id="rating"></span> {{info.likes}}</a>
+                      <a href="#/forum" ng-click="main.like(info.answer)" class="article-support"><span class="glyphicon glyphicon-thumbs-up" id="rating"></span> {{info.likes}}</a>
 
-                      <a href="#/forum" ng-click="main.dislike(info.answer);reloadRoute();" class="article-support"><span class="glyphicon glyphicon-thumbs-down" id="rating"></span></a>
+                      <a href="#/forum" ng-click="main.dislike(info.answer)" class="article-support"><span class="glyphicon glyphicon-thumbs-down" id="rating"></span></a>
 
                       <div class="icons" ng-controller="panelController as pane" class="col-md-6">
                         <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support"><span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}</a>
@@ -91,7 +91,7 @@
 
                         <div ng-show="pane.isSelected(1)">
                           <textarea rows="4" ng-model="pane.editForm" class="form-control" cols="50" placeholder="Edit your answer"></textarea>
-                          <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail);reloadRoute();" class="btn btn-info">Post</button>
+                          <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail,main);" class="btn btn-info">Post</button>
                           <a href="#/forum" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
                         </div>
 
@@ -111,8 +111,8 @@
                                   <input class="form-control" type="text" ng-model="pane.comment" placeholder="Your comments" />
                               </div>
                               <div class="form-group">
-                                  <button ng-click="pane.addComment(info.answer);reloadRoute();" class="btn btn-primary">Add</button>
-                                  <button ng-click="pane.setCommentsTab(0)" class="btn btn-default">Cancel</button>
+                                  <button ng-click="pane.addComment(info.answer,main)" class="btn btn-success">Add</button>
+                                  <button ng-click="pane.setCommentsTab(0)" class="btn btn-danger">Cancel</button>
                               </div>
                           </form>
                         </div>
