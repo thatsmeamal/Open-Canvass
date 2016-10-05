@@ -88,21 +88,19 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 						pwd: '',
 						confirmpwd: ''
 					};
-				}
-				else {
-					localStorage.userName = status.data.firstName;
-					localStorage.lastName = status.data.lastName;
-					localStorage.email = status.data.email;
-					localStorage.userId = status.data._id;
+				} else {
+
+					localStorage.userName = $scope.regUser.fname;
+					localStorage.lastName = $scope.regUser.lname;
+					localStorage.email = $scope.regUser.email;
 					$rootScope.globals = {
-						email: status.data.email
+						email: $scope.regUser.email
 					};
 					$cookieStore.put('globals', $rootScope.globals);
 					$location.path('/forum').replace();
 				}
 			});
-		}
-		else {
+		} else {
 			bootbox.alert('Passwords do not match !!')
 		}
 
@@ -113,6 +111,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 		var email = $scope.logs.email;
 		var pwd = $scope.logs.pwd;
 		if(email === "admin@admin.com" && pwd === "admin"){
+      localStorage.userName = "admin";
 			localStorage.email = email;
 			$rootScope.globals = {
 				email: "admin@admin.com"
@@ -197,28 +196,12 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 					$scope.mail["email"] = status.data[j].email;
 					$scope.id.push($scope.mail);
 				};
-				//$scope.quesUser();
 				$scope.user();
 				console.log("Question Details-->",cntlr.forumDetails);
 				cntlr.ansInfo();
 			}
 		});
 	};
-
-	// $scope.quesUser = function() {
-	// 	var i = 0,
-	// 	j = 0;
-	// 	$http.post('/quesuser',$scope.id).then(function(userdet){
-	// 		for(j=0;j<cntlr.forumDetails.length;j++) {
-	// 			for(i=0;i<userdet.data.length;i++) {
-	// 				if(cntlr.forumDetails[j].email === userdet.data[0].email) {
-	// 					cntlr.forumDetails[j].firstName = userdet.data[0].firstName;
-	// 					cntlr.forumDetails[j].lastName = userdet.data[0].lastName;
-	// 				}
-	// 			}
-	// 		}
-	// 	});
-	// };
 
 	$scope.user = function() {
 		$http.get('/users').then(function(userDetails) {
@@ -382,30 +365,3 @@ var todaysDate = function() {
 	today = m_names[mm]+' '+dd+', '+yyyy;
 	return today;
 };
-
-
-app.config(function($routeProvider){
-	$routeProvider
-	.when('/', {
-		templateUrl: 'html/signup.html',
-		controller: 'userController'
-	})
-
-	.when('/login', {
-		templateUrl: 'html/login.html',
-		controller: 'userController'
-	})
-
-	.when('/forum', {
-		templateUrl: 'html/forum.html'
-	})
-
-	.when('/answer', {
-		templateUrl: 'html/forum-answer.html'
-	})
-
-	.when('/admin', {
-		templateUrl: 'html/admin.html',
-		controller: 'adminController'
-	})
-});

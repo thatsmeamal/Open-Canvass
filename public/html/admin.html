@@ -2,10 +2,11 @@
 <head>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
   <link rel="stylesheet" href="../css/admin.css">
 
 </head>
-  <div class="container" ng-init="getAllUsers();">
+  <div class="container" ng-init="checkInfo();getAllUsers();">
     <div class="row">
       <nav class="navbar navbar-inverse col-md-12">
         <div class="container-fluid">
@@ -43,18 +44,24 @@
           </table>
 
           <div class="clearfix"></div>
-          <ul class="pagination pull-left">
-            <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-          </ul>
+
+          <ul id="pagination" class="pagination-sm"></ul>
+
         </div>
       </div>
       <a href="#/forum" class="centralised btn btn-success">GO TO FORUM</a>
     </div>
   </div>
+  <div class="footer1">
+  	<p>Open Canvass &copy 2016-2020</p>
+  </div>
+  <script>
+    $('#pagination-demo').twbsPagination({
+        totalPages: 35,
+        visiblePages: 7,
+        onPageClick: function (event, page) {
+            $('#page-content').text('Page ' + page);
+        }
+    });
+    </script>
 </html>

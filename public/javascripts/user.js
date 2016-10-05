@@ -20,6 +20,7 @@ console.log("Starting...");
 
 router.post('/register', function (req, res) {
 	userReg(req.body).then(function(data){
+		console.log("!!!!!!!!!!!",data);
 		res.send(data);
 	},function(e){
 		res.send("error");
