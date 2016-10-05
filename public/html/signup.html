@@ -2,11 +2,11 @@
 <head>
 	<title>Sign Up</title>
 	<script type="text/javascript" src="javascripts/canvass.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<script type="text/javascript" src="../javascripts/login-register.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
-	<img class="uimg" src="../images/5.jpg">				<!-- under-layer image -->
-
-	<div>
+<div>
 		<nav class="navbar navbar-inverse col-md-12">
 			<div class="container-fluid">
 				<div class="navbar-header col-md-2">
@@ -16,38 +16,54 @@
 		</nav>
 	</div>
 
-	<div id="main1">
-
-		<div id="regform">
-
-			<center><h1>User Registration</h1></center>
-
-			<form name="regform" ng-submit="newUser()">
-
-				<div class="form-group">
-				  <input type="text" ng-model="regUser.fname" class="form-control" placeholder="First name" required/>
-			  	</div>
-
-				<div class="form-group">
-					<input type="text" ng-model="regUser.lname" class="form-control" placeholder="Last name" required/>
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-login">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<form id="register-form" name="regform" ng-submit="newUser()" novalidate role="form">
+							<h2>REGISTER</h2>
+								<div class="form-group">
+									<input type="text" ng-model="regUser.fname" id="First Name" tabindex="1" class="form-control" placeholder="First Name" required>
+								</div>
+								<div class="form-group">
+									<input type="text" ng-model="regUser.lname" id="Last Name" tabindex="1" class="form-control" placeholder="Last Name" required>
+								</div>
+								<div class="form-group">
+									<input type="email" ng-model="regUser.email" id="email" tabindex="1" class="form-control" placeholder="Email Address" required>
+								</div>
+								<div class="form-group">
+									<input type="password" ng-model="regUser.pwd" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+								</div>
+								<div class="form-group">
+									<input type="password" ng-model="regUser.confirmpwd" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3">
+											<input type="submit" ng-disabled="regform.$invalid" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+										</div>
+									</div>
+								</div>
+						</form>
+					</div>
 				</div>
-
-				<div class="form-group">
-					<input type="email" ng-model="regUser.email" class="form-control" placeholder="Email ID" required/>
+			</div>
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-6 tabs">
+						<a href="#/login" id="login-form-link"><div class="login">LOGIN</div></a>
+					</div>
+					<div class="col-xs-6 tabs">
+						<a href="#/signup" class="active" id="register-form-link"><div class="register">REGISTER</div></a>
+					</div>
 				</div>
-
-				<div class="form-group">
-					<input type="password" ng-model="regUser.pwd" class="form-control" placeholder="Password" required/>
-				</div>
-
-				<div class="form-group">
-					<input type="password" ng-model="regUser.confirmpwd" class="form-control" placeholder="Confirm Password" required/>
-				</div>
-
-				<button type="submit" class="btn btn-success">Register</button>
-
-			</form>
+			</div>
 		</div>
 	</div>
-
+</div>
+</div>
+<div class="footer1">
+<p>Open Canvass &copy 2016-2020</p>
+</div>
 </html>

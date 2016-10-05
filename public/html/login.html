@@ -1,41 +1,60 @@
 <html ng-app="canvass">
 <head>
 	<title>Log In</title>
-	<script type="text/javascript" src="javascripts/canvass.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<script type="text/javascript" src="../javascripts/canvass.js"></script>
+	<script type="text/javascript" src="../javascripts/login-register.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
+<div>
+	<nav class="navbar navbar-inverse col-md-12">
+		<div class="container-fluid">
+			<div class="navbar-header col-md-2">
+				<a class="navbar-brand" href="#/">Open Canvass</a>
+			</div>
+		</div>
+	</nav>
+</div>
 
-	<img class="uimg" src="../images/1.jpg">				<!-- under-layer image -->
-
-	<div>
-		<nav class="navbar navbar-inverse col-md-12">
-			<div class="container-fluid">
-				<div class="navbar-header col-md-2">
-					<a class="navbar-brand" href="#/">Open Canvass</a>
+<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-login">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-lg-12">
+					<form name="logForm" id="login-form" name="logForm" ng-submit="logUser()" method="POST" novalidate role="form" style="display: block;">
+						<h2>LOGIN</h2>
+						<div class="form-group">
+							<input type="text" ng-model="logs.email" tabindex="1" class="form-control" placeholder="Username" required/>
+						</div>
+						<div class="form-group">
+							<input type="password" ng-model="logs.pwd" tabindex="2" class="form-control" placeholder="Password" required/>
+						</div>
+						<div class="col-xs-6 form-group pull-left checkbox">
+							<input id="checkbox1" type="checkbox" name="remember">
+							<label for="checkbox1">Remember Me</label>
+						</div>
+						<div class="col-xs-6 form-group pull-right">
+							<input type="submit" ng-disabled="logForm.$invalid" tabindex="4" class="form-control btn btn-login" value="Log In">
+						</div>
+					</form>
 				</div>
 			</div>
-		</nav>
+		</div>
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-xs-6 tabs">
+					<a href="#/login" class="active" id="login-form-link"><div class="login">LOGIN</div></a>
+				</div>
+				<div class="col-xs-6 tabs">
+					<a href="#/" id="register-form-link"><div class="register">REGISTER</div></a>
+				</div>
+			</div>
+		</div>
 	</div>
-
-	<div id="logform">
-
-		<center><h1>Member Login</h1></center>
-
-		<form ng-submit="logUser()" method="POST">
-
-			<div class="form-group">
-			  <label for="email">Email ID:</label>
-			  <input type="email" ng-model="logs.email" class="form-control" id="email">
-		  	</div>
-
-			<div class="form-group">
-			  <label for="email">Password:</label>
-			  <input type="password" ng-model="logs.pwd" class="form-control" id="pwd">
-		  	</div>
-
-			<button type="submit" class="btn btn-primary">Log In</button>
-
-		</form>
-	</div>
-
+</div>
+</div>
+</div>
+<div class="footer1">
+	<p>Open Canvass &copy 2016-2020</p>
+</div>
 </html>

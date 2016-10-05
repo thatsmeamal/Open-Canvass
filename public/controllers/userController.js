@@ -362,11 +362,6 @@ var todaysDate = function() {
 app.config(function($routeProvider){
 	$routeProvider
 	.when('/', {
-		templateUrl: 'html/home.html',
-		controller: 'userController'
-	})
-
-	.when('/signup', {
 		templateUrl: 'html/signup.html',
 		controller: 'userController'
 	})

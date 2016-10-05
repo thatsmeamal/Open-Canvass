@@ -12,16 +12,18 @@ app.controller('adminController',['$http','$scope','$window','$location', functi
     var temp = {
       email: mail
     };
-    if(confirm("Are you sure ?")) {
-      $http.post('/deleteuser',temp).then(function(status) {
-        if(status.data === "error") {
-          bootbox.alert('User could not be deleted');
-        } else {
-          bootbox.alert('User deleted successfully ');
-          $scope.getAllUsers();
-        }
+    bootbox.confirm("This action cannot be reverted...Are you sure ?", function(result) {
+      if(result) {
+        $http.post('/deleteuser',temp).then(function(status) {
+          if(status.data === "error") {
+            bootbox.alert('User could not be deleted');
+          } else {
+            bootbox.alert('User deleted successfully ');
+            $scope.getAllUsers();
+          }
         });
       }
-    };
+    });
+  };
 
 }]);
