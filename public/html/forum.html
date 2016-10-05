@@ -12,7 +12,7 @@
 </head>
 
 <div ng-controller="userController as main">
-  <div id="container" ng-init="quesDetails();readActive();">
+  <div id="container" ng-init="checkInfo(1);quesDetails();readActive();">
     <div class="row">
       <nav class="navbar navbar-inverse col-md-12">
         <div class="container-fluid">
@@ -22,7 +22,7 @@
 
           <div class="col-md-10">
             <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
-              <li>Welcome </li>
+              <li>Welcome {{currentUser}}</li>
               <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
             </ul>
           </div>

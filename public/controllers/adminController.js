@@ -1,11 +1,20 @@
-app.controller('adminController',['$http','$scope','$window','$location', function($http,$scope,$window,$location){
+app.controller('adminController',['$http','$scope','$window','$location', '$cookieStore',
+ function($http,$scope,$window,$location,$cookieStore){
 
   $scope.users = [];
 
   $scope.getAllUsers = function() {
-    $http.get('/getallusers').then(function(status) {
-      $scope.users = status.data;
-    });
+    var a = $cookieStore.get('globals');
+    console.log("!!!!!!!",a.email);
+		if(a.email === 'admin@admin.com') {
+			//$location.path('/admin').replace();
+      $http.get('/getallusers').then(function(status) {
+        $scope.users = status.data;
+      });
+    } else {
+      bootbox.alert("Unauthorised Entry !!");
+      $location.path('/').replace();
+    }
   };
 
   $scope.deleteUser = function(mail) {

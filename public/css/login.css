@@ -7,7 +7,7 @@ body {
   font-weight:100;
   width: 100%;
   background: -webkit-linear-gradient(left, #22d686, #24d3d3, #22d686, #24d3d3);
-  background: linear-gradient(to right, #22d686, #24d3d3, #22d686, #24d3d3);
+  background: linear-gradient(to right,#68b8d0, #78c673);
   background-size: 600% 100%;
   -webkit-animation: HeroBG 20s ease infinite;
           animation: HeroBG 20s ease infinite;
@@ -131,6 +131,11 @@ label {
 }
 .panel-login>.panel-heading .register {
   padding: 20px 30px;
+  background: #42567b;
+  border-bottom-right-radius: 5px;
+}
+.panel-login>.panel-heading .register:hover {
+  padding: 20px 30px;
   background: #2d3b55;
   border-bottom-right-radius: 5px;
 }
@@ -143,6 +148,16 @@ label {
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
+
+.login {
+  background-color: #3DA5D9;
+  color: #ffffff;
+}
+
+.login:hover{
+  background-color: #2364AA;
+}
+
 .panel-login>.panel-heading a#register-form-link {
   color: #fff;
   width: 100%;
@@ -155,6 +170,7 @@ label {
 
 .panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
   height: 45px;
+  color: #000000;
   border: 0;
   font-size: 16px;
   -webkit-transition: all 0.1s linear;
@@ -175,7 +191,7 @@ label {
   border-color: #ccc;
 }
 .btn-login {
-  background-color: #E8E9EC;
+  background-color: #069E2D;
   outline: none;
   color: #2D3B55;
   font-size: 14px;
@@ -183,14 +199,14 @@ label {
   font-weight: normal;
   padding: 14px 0;
   text-transform: uppercase;
-  border: none;
+  border-color: black;
   border-radius: 0px;
   box-shadow: none;
 }
 .btn-login:hover,
 .btn-login:focus {
   color: #fff;
-  background-color: #2D3B55;
+  background-color: #069E2D;
 }
 .forgot-password {
   text-decoration: underline;
@@ -203,7 +219,7 @@ label {
 }
 
 .btn-register {
-  background-color: #E8E9EC;
+  background-color: #069E2D;
   outline: none;
   color: #2D3B55;
   font-size: 14px;
@@ -211,12 +227,12 @@ label {
   font-weight: normal;
   padding: 14px 0;
   text-transform: uppercase;
-  border: none;
+  border-color: black;
   border-radius: 0px;
   box-shadow: none;
 }
 .btn-register:hover,
 .btn-register:focus {
   color: #fff;
-  background-color: #2D3B55;
+  background-color: #069E2D;
 }

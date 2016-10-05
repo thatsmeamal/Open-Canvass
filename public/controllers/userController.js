@@ -1,21 +1,12 @@
-var app = angular.module('canvass', ['ngRoute']);
+var app = angular.module('canvass', ['ngRoute', 'ngCookies']);
 
-app.controller('userController',['$http','$scope','$window','$location','dataService', function($http,$scope,$window,$location,dataService){
+app.controller('userController',['$http','$scope','$window','$location','dataService',
+ '$rootScope', '$cookieStore', function($http,$scope,$window,$location,dataService,
+ $rootScope,$cookieStore) {
+
 	var cntlr = this;
-
+	$scope.currentUser = localStorage.userName;
 	cntlr.nav = 0;
-
-	$scope.readActive = function() {
-		cntlr.nav = 1;
-	};
-
-	$scope.answerActive = function() {
-		cntlr.nav = 2;
-	};
-
-	$scope.isNav = function(s) {
-		return cntlr.nav === s;
-	};
 
 	$scope.regUser = {
 		fname: '',
@@ -47,22 +38,54 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 
 	$scope.users = [];
 
+	$scope.readActive = function() {
+		cntlr.nav = 1;
+	};
 
-	$scope.whereTo = function() {
-		if(localStorage.email === "admin@admin.com") {
-			$location.path('/admin').replace();
+	$scope.answerActive = function() {
+		cntlr.nav = 2;
+	};
+
+	$scope.isNav = function(s) {
+		return cntlr.nav === s;
+	};
+
+	$scope.clearInfo = function() {
+		$rootScope.globals = {
+			email: null
+		};
+		$cookieStore.put('globals',$rootScope.globals);
+		var a = $cookieStore.get('globals');
+	};
+
+	$scope.checkInfo = function(s) {
+		var a = $cookieStore.get('globals');
+		if(a.email === localStorage.email) {
+			if(s === 1) {
+				$location.path('/forum').replace();
+			}
+			if(s === 2) {
+				$location.path('/answer').replace();
+			}
 		} else {
-			$location.path('/forum').replace();
+			bootbox.alert("You are not logged In");
+			$location.path('/').replace();
 		}
 	};
 
+	// $scope.whereTo = function() {
+	// 	if(localStorage.email === "admin@admin.com") {
+	// 		$location.path('/admin').replace();
+	// 	} else {
+	// 		$location.path('/forum').replace();
+	// 	}
+	// };
 
 	$scope.newUser = function(){
 		var pwd= $scope.regUser.pwd;
 		var confirmpwd = $scope.regUser.confirmpwd;
 		if(pwd === confirmpwd){
 			$http.post('/register', $scope.regUser).then(function(status){
-				//console.log(status.data);
 				if(status.data === "error") {
 					console.log(status.data);
 					bootbox.alert("Email ID is already registered");
@@ -79,6 +102,10 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 					localStorage.lastName = status.data.lastName;
 					localStorage.email = status.data.email;
 					localStorage.userId = status.data._id;
+					$rootScope.globals = {
+						email: status.data.email
+					};
+					$cookieStore.put('globals', $rootScope.globals);
 					$location.path('/forum').replace();
 				}
 			});
@@ -95,6 +122,10 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 		var pwd = $scope.logs.pwd;
 		if(email === "admin@admin.com" && pwd === "admin"){
 			localStorage.email = email;
+			$rootScope.globals = {
+				email: "admin@admin.com"
+			};
+			$cookieStore.put('globals', $rootScope.globals);
 			$location.path('/admin').replace();
 		} else {
 			$http.post('/enter',$scope.logs).then(function(status){
@@ -109,13 +140,15 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 					localStorage.lastName = status.data.lastName;
 					localStorage.email = status.data.email;
 					localStorage.userId = status.data._id;
+					$rootScope.globals = {
+						email: status.data.email
+					};
+					$cookieStore.put('globals', $rootScope.globals);
 					$location.path('/forum').replace();
 				}
 			});
 		}
 	};
-
-
 
 	$scope.postQuestion = function() {
 		if($scope.searchBar.question.length === 0) {
