@@ -73,14 +73,6 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 		}
 	};
 
-	// $scope.whereTo = function() {
-	// 	if(localStorage.email === "admin@admin.com") {
-	// 		$location.path('/admin').replace();
-	// 	} else {
-	// 		$location.path('/forum').replace();
-	// 	}
-	// };
-
 	$scope.newUser = function(){
 		var pwd= $scope.regUser.pwd;
 		var confirmpwd = $scope.regUser.confirmpwd;
