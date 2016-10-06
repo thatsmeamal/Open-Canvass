@@ -1,67 +1,57 @@
-<html>
-<head>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://raw.github.com/botmonster/jquery-bootpag/master/lib/jquery.bootpag.min.js"></script>
-  <link rel="stylesheet" href="../css/admin.css">
-
-</head>
-  <div class="container" ng-init="checkInfo();getAllUsers();">
-    <div class="row">
-      <nav class="navbar navbar-inverse col-md-12">
-        <div class="container-fluid">
-          <div class="navbar-header col-md-2">
-            <a class="navbar-brand" href="#/admin">Open Canvass</a>
-          </div>
-
-          <div class="col-md-10">
-            <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
-              <li>Welcome admin</li>
-              <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-            </ul>
-          </div>
+<div class="container-fluid" ng-init="getAllUsers()">
+  <div class="row">
+    <nav class="navbar navbar-inverse col-md-12">
+      <div class="container-fluid">
+        <div class="navbar-header col-md-2">
+          <a class="navbar-brand" href="#/admin">Open Canvass</a>
         </div>
-      </nav>
-      <div class="col-md-12">
-        <h2>Registered Users</h2>
-        <div class="table-responsive">
-          <table id="mytable" class="table table-bordred table-striped">
-            <thead>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Delete</th>
-            </thead>
-            <tbody>
 
-              <tr ng-repeat="user in users">
-                <td>{{user.firstName}}</td>
-                <td>{{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td><a href="#/admin" ng-click="deleteUser(user.email)" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></a></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="clearfix"></div>
-
-          <ul id="pagination" class="pagination-sm"></ul>
-
+        <div class="col-md-10">
+          <ul class="nav navbar-nav navbar-right" style="display:inline;color:white;font-variant:small-caps">
+            <li>Welcome admin</li>
+            <li><a href="#/"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+          </ul>
         </div>
       </div>
-      <a href="#/forum" class="centralised btn btn-success">GO TO FORUM</a>
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Registered Users</h1>
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Delete</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in userList">
+              <td>{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.email}}</td>
+              <td><a href="#/admin" ng-click="deleteUser(user.email)" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="clearfix"></div>
+      </div>
+      <pagination
+      ng-model="currentPage"
+      total-items="2*numUsers"
+      max-size="navSize"
+      boundary-links="true">
+    </pagination>
+    <div>
+      <a href="#/forum" class="btn btn-success" style="margin: 0 45%">GO TO FORUM</a>
     </div>
   </div>
-  <div class="footer1">
-  	<p>Open Canvass &copy 2016-2020</p>
-  </div>
-  <script>
-    $('#pagination-demo').twbsPagination({
-        totalPages: 35,
-        visiblePages: 7,
-        onPageClick: function (event, page) {
-            $('#page-content').text('Page ' + page);
-        }
-    });
-    </script>
+</div>
+</div>
+<div class="footer1">
+  <p>Open Canvass &copy 2016-2020</p>
+</div>
 </html>

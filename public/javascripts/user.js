@@ -20,7 +20,6 @@ console.log("Starting...");
 
 router.post('/register', function (req, res) {
 	userReg(req.body).then(function(data){
-		console.log("!!!!!!!!!!!",data);
 		res.send(data);
 	},function(e){
 		res.send("error");
@@ -175,6 +174,14 @@ router.post('/deleteuser', function (req, res){
 	});
 });
 
+router.post('/usersbatch', function (req, res){
+	usersBatch(req.body).then(function(data){
+		res.send(data);
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+});
 
 module.exports = router;
 
@@ -283,6 +290,10 @@ var getAllUsers = function() {
 
 var deleteUser = function(temp) {
 	return User.removeAsync({email: temp.email});
+};
+
+var usersBatch = function(temp) {
+	return User.findAsync({},{},{skip:temp.skip,limit:5});
 };
 
 

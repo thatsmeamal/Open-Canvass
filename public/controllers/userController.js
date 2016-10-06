@@ -1,4 +1,4 @@
-var app = angular.module('canvass', ['ngRoute', 'ngCookies']);
+var app = angular.module('canvass', ['ngRoute', 'ngCookies', 'ui.bootstrap']);
 
 app.controller('userController',['$http','$scope','$window','$location','dataService',
  '$rootScope', '$cookieStore', function($http,$scope,$window,$location,dataService,
@@ -60,6 +60,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 
 	$scope.checkInfo = function(s) {
 		var a = $cookieStore.get('globals');
+    console.log(a.email,localStorage.email);
 		if(a.email === localStorage.email) {
 			if(s === 1) {
 				$location.path('/forum').replace();

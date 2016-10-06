@@ -1,15 +1,29 @@
 app.controller('adminController',['$http','$scope','$window','$location', '$cookieStore',
- function($http,$scope,$window,$location,$cookieStore){
+function($http,$scope,$window,$location,$cookieStore){
 
   $scope.users = [];
 
+  $scope.filteredTodos = [];
+  $scope.currentPage = 1;
+  $scope.numPerPage = 5;
+  $scope.navSize = 5;
+
+  $scope.$watch('currentPage + numPerPage', function() {
+    var temp = {
+      skip: ($scope.currentPage - 1) * 5
+    }
+    $http.post('/usersbatch', temp).then(function(status) {
+      $scope.userList = [];
+      $scope.userList = status.data;
+    });
+  });
+
   $scope.getAllUsers = function() {
     var a = $cookieStore.get('globals');
-    console.log("!!!!!!!",a.email);
-		if(a.email === 'admin@admin.com') {
-			//$location.path('/admin').replace();
+    if(a.email === 'admin@admin.com') {
+      $location.path('/admin').replace();
       $http.get('/getallusers').then(function(status) {
-        $scope.users = status.data;
+        $scope.numUsers = status.data.length;
       });
     } else {
       bootbox.alert("Unauthorised Entry !!");
@@ -29,6 +43,10 @@ app.controller('adminController',['$http','$scope','$window','$location', '$cook
           } else {
             bootbox.alert('User deleted successfully ');
             $scope.getAllUsers();
+            $http.post('/usersbatch', temp).then(function(status) {
+              $scope.userList = [];
+              $scope.userList = status.data;
+            });
           }
         });
       }
