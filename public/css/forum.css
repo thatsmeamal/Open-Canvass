@@ -8,6 +8,16 @@
   padding: 2px;
 }
 
+.ans {
+  margin-bottom: 50px;
+  margin-left: 10px;
+  border-bottom: black;
+}
+
+p {
+  padding: 5px;
+}
+
 .active {
   background: white;
   border-radius: 5px;

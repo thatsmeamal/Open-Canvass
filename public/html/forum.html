@@ -60,7 +60,7 @@
                     {{forum.question}}
                   </h3>
 
-                  <div ng-repeat="info in forum.ans" style="margin:20px;">
+                  <div ng-repeat="info in forum.ans" class="ans">
                     <div style="width:100%">
                       <img id="userpic" src="../images/user.png"/>
                       <span class="answer">{{info.ansFname+' '+info.ansLname}}</span>
@@ -68,21 +68,43 @@
                         Written on {{info.ansDate}}
                       </div>
                     </div>
-                    <p style="padding:10px;">{{info.answer}}</p>
+                    <p>{{info.answer}}</p>
+
+                    <p>
+                      <span class="glyphicon glyphicon-heart" id="rating"></span>
+                      <span ng-if="info.likes == 1 && info.liked"><b> You</b> like this</span>
+                      <span ng-if="info.likes >= 0 && !info.liked"><b>{{info.likes}}</b> people like this</span>
+                      <span ng-if="info.likes >= 2 && info.liked"><b>You</b> and <b>{{info.likes-1}}</b> people like this</span>
+                    </p>
 
                     <div class="col-md-12">
-                      <a href="#/forum" ng-click="main.like(info.answer)" class="article-support"><span class="glyphicon glyphicon-thumbs-up" id="rating"></span> {{info.likes}}</a>
+                      <a href="#/forum" ng-click="main.like(info.answer);" class="article-support">
+                        <span class="glyphicon glyphicon-thumbs-up" id="rating"></span>
+                         {{info.likes}}
+                    </a>
 
-                      <a href="#/forum" ng-click="main.dislike(info.answer)" class="article-support"><span class="glyphicon glyphicon-thumbs-down" id="rating"></span></a>
+                      <a href="#/forum" ng-click="main.dislike(info.answer);" class="article-support">
+                        <span class="glyphicon glyphicon-thumbs-down" id="rating"></span>
+                      </a>
 
                       <div class="icons" ng-controller="panelController as pane" class="col-md-6">
-                        <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support"><span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}</a>
-                        <a  href="#/forum" ng-click="pane.setDetails(info.answer)" class="article-support" ><span class="glyphicon glyphicon-edit" id="rating"></span></a>
-                        <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail,forum.question)" class="article-support" ><span class="glyphicon glyphicon-trash" id="rating"></span></a>
+                        <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support">
+                          <span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}
+                        </a>
+                        <a  href="#/forum" ng-click="pane.setDetails(info.answer)" class="article-support" >
+                          <span class="glyphicon glyphicon-edit" id="rating"></span>
+                        </a>
+                        <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail,forum.question)" class="article-support">
+                          <span class="glyphicon glyphicon-trash" id="rating"></span>
+                        </a>
 
                         <div ng-show="pane.isSelected(1)">
-                          <textarea rows="4" ng-model="pane.editForm" class="form-control" cols="50" placeholder="Edit your answer"></textarea>
-                          <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail,main);" class="btn btn-info">Post</button>
+                          <textarea rows="4" ng-model="pane.editForm" class="form-control" cols="50"
+                          placeholder="Edit your answer">
+                        </textarea>
+                          <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail,main);"
+                            class="btn btn-info">Post
+                          </button>
                           <a href="#/forum" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
                         </div>
 

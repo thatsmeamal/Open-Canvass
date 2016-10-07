@@ -7,6 +7,7 @@ var AnswerSchema = new Schema({
   email: String,               //for storing the id of the user answering the question
   postedDate: String,            //Answer posted date
   likes: Number,
+  likedUsers: [],
   comments: [{}]
 });
 

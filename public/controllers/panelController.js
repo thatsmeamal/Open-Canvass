@@ -60,6 +60,7 @@ app.controller('panelController', ['$http','$scope','$location','dataService', f
         email: localStorage.email,
         postedDate: todaysDate(),
         likes: 0,
+        likedUsers: [],
         comments: []
       };
       $http.post('/answer',this.ansDetails).then(function(status){

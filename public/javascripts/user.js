@@ -183,12 +183,25 @@ router.post('/usersbatch', function (req, res){
 	});
 });
 
+router.post('/isliked', function (req, res){
+	isLiked(req.body).then(function(data){
+		if(data.length === 0) {
+			res.send("false");
+		} else {
+			res.send("true");
+		}
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+});
+
 module.exports = router;
 
 
 var userReg = function(userParam) {
-	var register = new User({firstName: userParam.fname, lastName: userParam.lname, email: userParam.email,
-		password: userParam.pwd.hashCode(),status:1});
+	var register = new User({firstName: userParam.fname, lastName: userParam.lname,
+		email: userParam.email, password: userParam.pwd.hashCode(),status:1});
 	return register.saveAsync();
 };
 
@@ -226,7 +239,9 @@ var retrieveUser = function(id) {
 
 
 var saveAnswer = function(ansParam) {
-	var postAns = new Answer({answer: ansParam.answer,quesId: ansParam.quesId,email: ansParam.email, postedDate: ansParam.postedDate, likes: ansParam.likes,comments: ansParam.comments});
+	var postAns = new Answer({answer: ansParam.answer,quesId: ansParam.quesId,
+		email: ansParam.email, postedDate: ansParam.postedDate, likes: ansParam.likes,
+		likedUsers: ansParam.likedUsers, comments: ansParam.comments});
 	return postAns.saveAsync();
 }
 
@@ -237,7 +252,7 @@ var getAnswers = function() {
 var like = function(temp) {
 	Answer.updateAsync(
 		{answer:temp.answer},
-		{$inc:{likes:1}}
+		{$inc:{likes:1}, $push:{likedUsers: temp.email}}
 	);
 	return Answer.findAsync({answer:temp.answer});
 };
@@ -245,7 +260,7 @@ var like = function(temp) {
 var dislike = function(temp) {
 	Answer.updateAsync(
 		{answer:temp.answer},
-		{$inc:{likes:-1}}
+		{$inc:{likes:-1}, $pull:{likedUsers:temp.email}}
 	);
 	return Answer.findAsync({answer:temp.answer});
 };
@@ -294,6 +309,10 @@ var deleteUser = function(temp) {
 
 var usersBatch = function(temp) {
 	return User.findAsync({},{},{skip:temp.skip,limit:5});
+};
+
+var isLiked = function(temp) {
+	return Answer.findAsync({answer: temp.answer, likedUsers: temp.email},{likedUsers:1, _id:0});
 };
 
 
