@@ -146,14 +146,14 @@ this.addComment = function(ans,main) {
       answer: ans,
       comment: comms.comment
     };
-    if(localStorage.email !== comms.email) {
-      bootbox.alert("You do not have the permission to delete this comment");
-    } else {
+    if(localStorage.email === comms.email || localStorage.email === "admin@admin.com") {
       $http.post('/deletecomment',temp).then(function(status){
         bootbox.alert("Comment deleted successfully");
         dataService.commentObj = status.data[0].comments;
         main.displayComments(ans,dataService.commentObj);
       });
+    } else {
+      bootbox.alert("You do not have the permission to delete this comment");
     }
   };
 

@@ -114,13 +114,13 @@
                       <div class="comments">
                         <img id="userpic" src="../images/user.png"/>
                         <span>{{comms.name+" says:"}}</span>
-                        <a href="#/forum" style="margin-left:62%" ng-click="pane.deleteComment(info.answer,comms,main)"
-                        class="article-support"><span class="glyphicon glyphicon-trash" id="rating"></span>
-                      </a>
                       <div class="post">
                         {{comms.date}}
                       </div>
                       <p>{{comms.comment}}</p>
+                      <a href="#/forum" style="margin-left:90%" ng-click="pane.deleteComment(info.answer,comms,main)"
+                      class="article-support"><span class="glyphicon glyphicon-trash" id="rating"></span>
+                    </a>
                     </div>
                   </div>
                   <form class="form-inline" role="form">
