@@ -90,7 +90,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
               confirmpwd: ''
             };
           } else {
-
+            bootbox.alert("asdasd");
             localStorage.userName = $scope.regUser.fname;
             localStorage.lastName = $scope.regUser.lname;
             localStorage.email = $scope.regUser.email;

@@ -1,30 +1,34 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
-var mongoose = require('mongoose');
-var Promise = require('bluebird');
-Promise.promisifyAll(mongoose);
-mongoose.connect('mongodb://127.0.0.1/canvass');
+// var mongoose = require('mongoose');
+// var Promise = require('bluebird');
+// Promise.promisifyAll(mongoose);
+// mongoose.connect('mongodb://127.0.0.1/canvass');
+//
+// 
+// var userModelSchema = require('../../node/models/users');
+// var questionModelSchema = require('../../node/models/questions');
+// var answerModelSchema = require('../../node/models/answers');
+//
+// var User = mongoose.model('User', userModelSchema);
+// var Question = mongoose.model('Question', questionModelSchema);
+// var Answer = mongoose.model('Answer', answerModelSchema);
 
-
-var userModelSchema = require('../../node/models/users');
-var questionModelSchema = require('../../node/models/questions');
-var answerModelSchema = require('../../node/models/answers');
-
-var User = mongoose.model('User', userModelSchema);
-var Question = mongoose.model('Question', questionModelSchema);
-var Answer = mongoose.model('Answer', answerModelSchema);
+var userFunctions = require('../../node/functionalities/user');
 
 
 console.log("Starting...");
 
-router.post('/register', function (req, res) {
-	userReg(req.body).then(function(data){
-		res.send(data);
-	},function(e){
-		res.send("error");
-	});
-});
+router.post('/register', userFunctions.register);
+
+// router.post('/register', function (req, res) {
+// 	userReg(req.body).then(function(data){
+// 		res.send(data);
+// 	},function(e){
+// 		res.send("error");
+// 	});
+// });
 
 router.post('/enter', function (req, res) {
 	check(req.body).then(function(data){
@@ -196,14 +200,25 @@ router.post('/isliked', function (req, res){
 	});
 });
 
+
+router.post('/deletecomment', function(req,res){
+	deleteComment(req.body).then(function(data){
+		res.send(data);
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+});
+
+
 module.exports = router;
 
 
-var userReg = function(userParam) {
-	var register = new User({firstName: userParam.fname, lastName: userParam.lname,
-		email: userParam.email, password: userParam.pwd.hashCode(),status:1});
-	return register.saveAsync();
-};
+// var userReg = function(userParam) {
+// 	var register = new User({firstName: userParam.fname, lastName: userParam.lname,
+// 		email: userParam.email, password: userParam.pwd.hashCode(),status:1});
+// 	return register.saveAsync();
+// };
 
 var getUser = function() {
 	return User.findAsync();
@@ -286,7 +301,8 @@ var addComment = function(temp) {
 	var commentData = {
 		name: temp.name,
 		date: temp.date,
-		comment: temp.comment
+		comment: temp.comment,
+		email: temp.email
 	};
 	Answer.updateAsync(
 		{answer: temp.answer},
@@ -313,6 +329,18 @@ var usersBatch = function(temp) {
 
 var isLiked = function(temp) {
 	return Answer.findAsync({answer: temp.answer, likedUsers: temp.email},{likedUsers:1, _id:0});
+};
+
+var deleteComment = function(temp) {
+	var commentData = {
+		comment: temp.comment,
+		answer: temp.answer
+	};
+	Answer.updateAsync(
+		{answer: temp.answer},
+		{$pull: {comments: {comment: temp.comment}}}
+	);
+	return Answer.findAsync({answer:temp.answer});
 };
 
 

@@ -94,7 +94,8 @@ this.addComment = function(ans,main) {
     name: localStorage.userName+' '+localStorage.lastName,
     date: todaysDate(),
     comment: this.comment,
-    answer: ans
+    answer: ans,
+    email: localStorage.email
   };
   if(this.comment === ''){
     alert('Blank comment !!!');
@@ -138,7 +139,29 @@ this.addComment = function(ans,main) {
 		}
   };
 
+
+
+  this.deleteComment = function(ans,comms,main) {
+    var temp = {
+      answer: ans,
+      comment: comms.comment
+    };
+    if(localStorage.email !== comms.email) {
+      bootbox.alert("You do not have the permission to delete this comment");
+    } else {
+      $http.post('/deletecomment',temp).then(function(status){
+        bootbox.alert("Comment deleted successfully");
+        dataService.commentObj = status.data[0].comments;
+        main.displayComments(ans,dataService.commentObj);
+      });
+    }
+  };
+
+
+
 }]);
+
+
 
 app.service('dataService', function() {
   // public API
