@@ -6,34 +6,27 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight:100;
   width: 100%;
-  background: -webkit-linear-gradient(left, #22d686, #24d3d3, #22d686, #24d3d3);
-  background: linear-gradient(to right,#68b8d0, #78c673);
-  background-size: 600% 100%;
-  -webkit-animation: HeroBG 20s ease infinite;
-          animation: HeroBG 20s ease infinite;
-}
+  background: linear-gradient(270deg, #dd8d08, #39960e, #13ca9b, #bba80b);
+  background-size: 800% 800%;
 
-@-webkit-keyframes HeroBG {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
 
-@keyframes HeroBG {
-  0% {
-    background-position: 0 0;
+  @-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
-  50% {
-    background-position: 100% 0;
+  @-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
-  100% {
-    background-position: 0 0;
+  @keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
 }
 
@@ -45,11 +38,11 @@ label {
   font-weight: 300;
 }
 .panel-login {
-   border: none;
+  border: none;
   -webkit-box-shadow: 0px 0px 49px 14px rgba(188,190,194,0.39);
   -moz-box-shadow: 0px 0px 49px 14px rgba(188,190,194,0.39);
   box-shadow: 0px 0px 49px 14px rgba(188,190,194,0.39);
-  }
+}
 .panel-login .checkbox input[type=checkbox]{
   margin-left: 0px;
 }
@@ -60,7 +53,7 @@ label {
   position: relative;
 }
 .panel-login .checkbox {
- padding-left: 20px;
+  padding-left: 20px;
 }
 .panel-login .checkbox label::before {
   content: "";

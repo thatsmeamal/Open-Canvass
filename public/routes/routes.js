@@ -18,6 +18,10 @@ app.config(function($routeProvider){
 		templateUrl: 'html/forum-answer.html'
 	})
 
+	.when('/yourcontent', {
+		templateUrl: 'html/your-content.html'
+	})
+
 	.when('/admin', {
 		templateUrl: 'html/admin.html',
 		controller: 'adminController'

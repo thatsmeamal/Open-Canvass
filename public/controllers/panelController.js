@@ -75,32 +75,32 @@ app.controller('panelController', ['$http','$scope','$location','dataService', f
   };
 
 
-this.getComments = function(ans) {
-  var temp = {
-    answer: ans
+  this.getComments = function(ans) {
+    var temp = {
+      answer: ans
+    };
+    $http.post('/getcomments',temp).then(function(status){
+      if(status.data === "error") {
+        console.log("Error retrieving the comments");
+      } else {
+        console.log(status.data);
+      }
+    });
   };
-  $http.post('/getcomments',temp).then(function(status){
-    if(status.data === "error") {
-      console.log("Error retrieving the comments");
+
+
+  this.addComment = function(ans,main) {
+    var temp = {
+      name: localStorage.userName+' '+localStorage.lastName,
+      date: todaysDate(),
+      comment: this.comment,
+      answer: ans,
+      email: localStorage.email
+    };
+    if(this.comment === ''){
+      alert('Blank comment !!!');
     } else {
-      console.log(status.data);
-    }
-  });
-};
-
-
-this.addComment = function(ans,main) {
-  var temp = {
-    name: localStorage.userName+' '+localStorage.lastName,
-    date: todaysDate(),
-    comment: this.comment,
-    answer: ans,
-    email: localStorage.email
-  };
-  if(this.comment === ''){
-    alert('Blank comment !!!');
-  } else {
-    $http.post('/addcomment',temp).then(function(status){
+      $http.post('/addcomment',temp).then(function(status){
         if(status.data === 'error') {
           alert('Sorry !!! Comment could not be added');
         } else {
@@ -109,11 +109,11 @@ this.addComment = function(ans,main) {
           main.displayComments(ans,dataService.commentObj);
         }
 
-  });
-  this.comment = '';
-  this.cancel();
-  }
-};
+      });
+      this.comment = '';
+      this.cancel();
+    }
+  };
 
 
   this.setDetails = function(currentValue) {
@@ -130,13 +130,17 @@ this.addComment = function(ans,main) {
     };
     if(localStorage.email === temp.mail || localStorage.email === "admin@admin.com") {
       $http.post('/editAnswer',temp).then(function(status){
-        bootbox.alert('Edit was successfull');
-        main.EditedAnswer(currentValue,newValue);
+        if(status.data === "error") {
+          bootbox.alert("Sorry...Answer could not be edited");
+        } else {
+          bootbox.alert('Edit was successfull');
+          main.EditedAnswer(currentValue,newValue);
+        }
       });
       this.tab = 0;
     } else {
-			bootbox.alert("You do not have the permission to edit this post")
-		}
+      bootbox.alert("You do not have the permission to edit this post")
+    }
   };
 
 
@@ -148,9 +152,13 @@ this.addComment = function(ans,main) {
     };
     if(localStorage.email === comms.email || localStorage.email === "admin@admin.com") {
       $http.post('/deletecomment',temp).then(function(status){
-        bootbox.alert("Comment deleted successfully");
-        dataService.commentObj = status.data[0].comments;
-        main.displayComments(ans,dataService.commentObj);
+        if(status.data === "error") {
+          bootbox.alert("Sorry...Comment could not be deleted");
+        } else {
+          bootbox.alert("Comment deleted successfully");
+          dataService.commentObj = status.data[0].comments;
+          main.displayComments(ans,dataService.commentObj);
+        }
       });
     } else {
       bootbox.alert("You do not have the permission to delete this comment");
@@ -158,6 +166,32 @@ this.addComment = function(ans,main) {
   };
 
 
+  this.deleteQuestion = function(question,mail,main) {
+    var temp = {
+      question: question,
+      quesEmail: mail
+    };
+    if(localStorage.email === temp.quesEmail || localStorage.email === "admin@admin.com") {
+      bootbox.confirm("Are you sure you want to delete this question ?", function(result){
+        if(result) {
+          $http.post('/deletequestion',temp).then(function(status) {
+            if(status.data === "error") {
+              bootbox.alert("Question deletion unsuccessful");
+            } else {
+              bootbox.alert("Question deleted successfully");
+              main.forumDetails = [];
+              main.ansData = [];
+              main.quesDetails();
+            }
+          });
+        } else {
+          return;
+        }
+      });
+    } else {
+      bootbox.alert("You do not have permission to delete this question");
+    }
+  };
 
 }]);
 
@@ -165,8 +199,8 @@ this.addComment = function(ans,main) {
 
 app.service('dataService', function() {
   // public API
-    this.commentObj= null;
-    this.answerObj = null;
+  this.commentObj= null;
+  this.answerObj = null;
 });
 
 var todaysDate = function() {

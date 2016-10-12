@@ -170,6 +170,15 @@ exports.commentDelete = function(req,res){
 	});
 };
 
+exports.questionDelete = function(req,res){
+	deleteQuestion(req.body).then(function(data){
+		res.send(data);
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+};
+
 
 
 var userReg = function(userParam) {
@@ -287,6 +296,14 @@ var deleteComment = function(temp) {
 		{$pull: {comments: {comment: temp.comment}}}
 	);
 	return Answer.findAsync({answer:temp.answer});
+};
+
+var deleteQuestion = function(temp) {
+	console.log(temp.question);
+	Question.removeAsync(
+		{question: temp.question}
+	);
+	return Question.findAsync();
 };
 
 

@@ -3,7 +3,7 @@
 </head>
 
 <div ng-controller="userController as main">
-  <div id="container" ng-init="checkInfo(1);main.quesDetails();readActive();">
+  <div id="container" ng-init="checkInfo(3);main.yourContent();yourContentActive();">
     <div class="row">
       <nav class="navbar navbar-inverse col-md-12">
         <div class="container-fluid">
@@ -79,23 +79,23 @@
                   </p>
 
                   <div class="col-md-12">
-                    <a href="#/forum" ng-click="main.like(info.answer);" class="article-support">
+                    <a href="#/yourcontent" ng-click="main.like(info.answer);" class="article-support">
                       <span class="glyphicon glyphicon-thumbs-up" id="rating"></span>
                       {{info.likes}}
                     </a>
 
-                    <a href="#/forum" ng-click="main.dislike(info.answer);" class="article-support">
+                    <a href="#/yourcontent" ng-click="main.dislike(info.answer);" class="article-support">
                       <span class="glyphicon glyphicon-thumbs-down" id="rating"></span>
                     </a>
 
                     <div class="icons" ng-controller="panelController as pane" class="col-md-6">
-                      <a href="#/forum" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support">
+                      <a href="#/yourcontent" ng-click="pane.setCommentsTab(1,info.answer)" class="article-support">
                         <span class="glyphicon glyphicon-comment" id="rating"></span> {{info.ansComments.length}}
                       </a>
-                      <a  href="#/forum" ng-click="pane.setDetails(info.answer)" class="article-support" >
+                      <a  href="#/yourcontent" ng-click="pane.setDetails(info.answer)" class="article-support" >
                         <span class="glyphicon glyphicon-edit" id="rating"></span>
                       </a>
-                      <a href="#/forum" ng-click="main.delete(info.answer,info.ansMail,forum.question)" class="article-support">
+                      <a href="#/yourcontent" ng-click="main.delete(info.answer,info.ansMail,forum.question)" class="article-support">
                         <span class="glyphicon glyphicon-trash" id="rating"></span>
                       </a>
 
@@ -106,7 +106,7 @@
                       <button type="button" ng-click="pane.editAnswer(info.answer,pane.editForm,info.ansMail,main);"
                       class="btn btn-info">Post
                     </button>
-                    <a href="#/forum" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
+                    <a href="#/yourcontent" type="button" ng-click="pane.setTab(0)" class="btn btn-info">Cancel</a>
                   </div>
 
                   <div ng-show="pane.commentsSelected(1)">
@@ -118,7 +118,7 @@
                         {{comms.date}}
                       </div>
                       <p>{{comms.comment}}</p>
-                      <a href="#/forum" style="margin-left:90%" ng-click="pane.deleteComment(info.answer,comms,main)"
+                      <a href="#/yourcontent" style="margin-left:90%" ng-click="pane.deleteComment(info.answer,comms,main)"
                       class="article-support"><span class="glyphicon glyphicon-trash" id="rating"></span>
                     </a>
                     </div>

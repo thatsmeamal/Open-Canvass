@@ -3,7 +3,7 @@
 </head>
 
 <div ng-controller="userController as main">
-<div id="container" ng-init="checkInfo(2);quesDetails();answerActive();">
+<div id="container" ng-init="checkInfo(2);main.quesDetails();answerActive();">
   <div class="row">
     <nav class="navbar navbar-inverse col-md-12">
       <div class="container-fluid">
@@ -53,7 +53,7 @@
     <div class="col-sm-8">
       <div id="content">
 
-        <article class="art1" ng-repeat="user in main.ansData"  ng-controller="panelController as pane">
+        <article class="art1" style="margin-bottom:50px" ng-repeat="user in main.ansData" ng-controller="panelController as pane">
           <div class="art-header">
             <span class="question">Asked By {{user.quesFname+' '+user.quesLname}} on {{user.quesDate}}</span>
             <h3 class="title">
@@ -68,6 +68,7 @@
           </div>
           <div class="col-md-3" ng-hide="pane.isSelected(1)">
             <a href="#/answer" ng-click="pane.setTab(1)" class="article-support">Answer <span class="glyphicon glyphicon-edit" id="rating"></span></a>
+            <a href="#/answer" ng-click="pane.deleteQuestion(user.question,user.quesEmail,main)" class="article-support"><span class="glyphicon glyphicon-trash" id="rating"></span></a>
           </div>
         </article>
 

@@ -47,6 +47,10 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
       cntlr.nav = 2;
     };
 
+    $scope.yourContentActive = function() {
+      cntlr.nav = 3;
+    };
+
     $scope.isNav = function(s) {
       return cntlr.nav === s;
     };
@@ -67,6 +71,9 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
         }
         if(s === 2) {
           $location.path('/answer').replace();
+        }
+        if(s === 3) {
+          $location.path('/yourcontent').replace();
         }
       } else {
         bootbox.alert("You are not logged In");
@@ -90,7 +97,6 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
               confirmpwd: ''
             };
           } else {
-            bootbox.alert("asdasd");
             localStorage.userName = $scope.regUser.fname;
             localStorage.lastName = $scope.regUser.lname;
             localStorage.email = $scope.regUser.email;
@@ -163,6 +169,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
             $scope.item["quesFname"] = status.data[0].firstName;
             $scope.item["quesLname"] = status.data[0].lastName;
             $scope.item["quesDate"] = status.data[0].postedDate;
+            $scope.item["quesEmail"] = status.data[0].email;
             cntlr.ansData.unshift($scope.item);
           }
           $scope.searchBar = {
@@ -176,8 +183,10 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
     };
 
 
-    $scope.quesDetails = function() {
+    cntlr.quesDetails = function() {
       var j = '';
+      cntlr.forumDetails = [];
+      cntlr.ansData = [];
       $http.get('/quesdata').then(function(status){
         if(status.data === "error") {
           console.log("FORUM DATA CANNOT BE LOADED")
@@ -216,8 +225,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 
     cntlr.ansInfo = function() {
       var i = 0,
-          j = 0,
-          k = 0;
+      j = 0,
+      k = 0;
       $http.get('/ansinfo').then(function(status) {
         if(status.data === "error") {
           console.log("ANSWER DETAILS COULD NOT BE LOADED");
@@ -232,6 +241,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
             $scope.item["quesFname"] = cntlr.forumDetails[i].firstName;
             $scope.item["quesLname"] = cntlr.forumDetails[i].lastName;
             $scope.item["quesDate"] = cntlr.forumDetails[i].postedDate;
+            $scope.item["quesEmail"] = cntlr.forumDetails[i].email;
             cntlr.ansTemp = [];					//IMPORTANT
             for(j=0;j<status.data.length;j++) {
               if(cntlr.forumDetails[i].questionId === status.data[j].quesId) {
@@ -281,6 +291,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
               }
             }
           });
+        } else {
+          console.log("You already liked this post");
         }
       });
     };
@@ -305,6 +317,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
               }
             }
           });
+        } else {
+          console.log("You do not like this post");
         }
       });
     };
@@ -379,6 +393,38 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
         }
       }
     };
+
+    cntlr.yourContent = function() {
+      var j = '';
+      cntlr.forumDetails = [];
+      cntlr.ansData = [];
+      $http.get('/quesdata').then(function(status){
+        if(status.data === "error") {
+          console.log("YOUR DATA CANNOT BE LOADED")
+        } else {
+          console.log("YOUR DATA LOADED");
+          for(j=0;j<status.data.length;j++) {
+            if (status.data[j].email === localStorage.email) {
+              $scope.dets = {};
+              $scope.dets["questionId"] = status.data[j]._id
+              $scope.dets["question"] =  status.data[j].question;
+              $scope.dets["userId"] = status.data[j].userId;
+              $scope.dets["email"] = status.data[j].email;
+              $scope.dets["postedDate"] = status.data[j].postedDate;
+              $scope.dets["firstName"] = status.data[j].firstName;
+              $scope.dets["lastName"] = status.data[j].lastName;
+              cntlr.forumDetails.push($scope.dets);
+              $scope.mail = {};
+              $scope.mail["email"] = status.data[j].email;
+              $scope.id.push($scope.mail);
+            }
+          };
+          $scope.user();
+          console.log("Your Question Details-->",cntlr.forumDetails);
+          cntlr.ansInfo();
+        }
+      });
+    }
 
   }]);
 

@@ -23,7 +23,11 @@ function($http,$scope,$window,$location,$cookieStore){
     if(a.email === 'admin@admin.com') {
       $location.path('/admin').replace();
       $http.get('/getallusers').then(function(status) {
-        $scope.numUsers = status.data.length;
+        if(status.data === "error") {
+          console.log("Something went wrong");
+        } else {
+          $scope.numUsers = status.data.length;
+        }
       });
     } else {
       bootbox.alert("Unauthorised Entry !!");
@@ -42,6 +46,7 @@ function($http,$scope,$window,$location,$cookieStore){
             bootbox.alert('User could not be deleted');
           } else {
             bootbox.alert('User deleted successfully ');
+            $scope.currentPage = 1;
             $scope.getAllUsers();
             $http.post('/usersbatch', temp).then(function(status) {
               $scope.userList = [];

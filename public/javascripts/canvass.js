@@ -46,4 +46,6 @@ router.post('/isliked', userFunctions.likedPost);
 
 router.post('/deletecomment', userFunctions.commentDelete);
 
+router.post('/deletequestion', userFunctions.questionDelete);
+
 module.exports = router;
