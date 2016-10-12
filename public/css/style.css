@@ -142,8 +142,8 @@ h1 {
   padding: 2px;
   background-color: #262626;
   text-align: center;
-
-    clear: both;
+	margin-top: 200px;
+  clear: both;
 }
 
 .footer1 {

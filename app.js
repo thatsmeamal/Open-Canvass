@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var first = require('./public/javascripts/user');
+var first = require('./public/javascripts/canvass');
 
 app.use('/', first);
 

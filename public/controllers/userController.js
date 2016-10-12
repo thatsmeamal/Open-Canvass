@@ -163,7 +163,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
             $scope.item["quesFname"] = status.data[0].firstName;
             $scope.item["quesLname"] = status.data[0].lastName;
             $scope.item["quesDate"] = status.data[0].postedDate;
-            cntlr.ansData.push($scope.item);
+            cntlr.ansData.unshift($scope.item);
           }
           $scope.searchBar = {
             question: '',
@@ -216,8 +216,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
 
     cntlr.ansInfo = function() {
       var i = 0,
-      j = 0,
-      k = 0;
+          j = 0,
+          k = 0;
       $http.get('/ansinfo').then(function(status) {
         if(status.data === "error") {
           console.log("ANSWER DETAILS COULD NOT BE LOADED");
