@@ -179,6 +179,24 @@ exports.questionDelete = function(req,res){
 	});
 };
 
+exports.bookmarkSet = function(req,res){
+	setBookmark(req.body).then(function(data){
+		res.send(data);
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+};
+
+exports.bookmarkRemove = function(req,res){
+	removeBookmark(req.body).then(function(data){
+		res.send(data);
+	},function(e){
+		console.log(e.message);
+		res.send("error");
+	});
+};
+
 
 
 var userReg = function(userParam) {
@@ -200,7 +218,7 @@ var check = function(logParam) {
 var saveQues = function(quesParam) {
 	var postQues = new Question({question: quesParam.question, userId: quesParam.userId,
 		firstName: quesParam.firstName, lastName: quesParam.lastName, email: quesParam.email,
-		postedDate: quesParam.postedDate});
+		postedDate: quesParam.postedDate, bookmarks: quesParam.bookmarks});
 	return postQues.saveAsync();
 }
 
@@ -306,6 +324,21 @@ var deleteQuestion = function(temp) {
 	return Question.findAsync();
 };
 
+var setBookmark = function(temp) {
+	Question.updateAsync(
+		{question: temp.question},
+		{$push: {bookmarks: temp.email}}
+	);
+	return Question.findAsync({question:temp.question});
+};
+
+var removeBookmark = function(temp) {
+	Question.updateAsync(
+		{question: temp.question},
+		{$pull: {bookmarks: temp.email}}
+	);
+	return Question.findAsync({question:temp.question});
+}
 
 String.prototype.hashCode = function(){
 	var hash = 0;

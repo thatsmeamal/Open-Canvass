@@ -10,7 +10,8 @@ var QuestionSchema = new Schema({
   firstName: String,
   lastName: String,
   email: String,
-  postedDate: String
+  postedDate: String,
+  bookmarks: []
 });
 
 module.exports = QuestionSchema;

@@ -48,4 +48,8 @@ router.post('/deletecomment', userFunctions.commentDelete);
 
 router.post('/deletequestion', userFunctions.questionDelete);
 
+router.post('/setbookmark', userFunctions.bookmarkSet);
+
+router.post('/removebookmark', userFunctions.bookmarkRemove);
+
 module.exports = router;

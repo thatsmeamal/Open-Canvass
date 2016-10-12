@@ -138,11 +138,17 @@ h2 {
   width: 5%;
 }
 
-.post, .question {
+.question {
   font-size: 12px;
   color: #6D696A;
-  padding-left: 38px;
   font-style: italic;
+}
+
+.post {
+  font-size: 12px;
+  color: #6D696A;
+  font-style: italic;
+  padding-left: 35px;
 }
 
 #content span #rating {

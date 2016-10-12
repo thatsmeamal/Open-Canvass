@@ -51,6 +51,10 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
       cntlr.nav = 3;
     };
 
+    $scope.yourBookmarksActive = function() {
+      cntlr.nav = 4;
+    };
+
     $scope.isNav = function(s) {
       return cntlr.nav === s;
     };
@@ -74,6 +78,9 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
         }
         if(s === 3) {
           $location.path('/yourcontent').replace();
+        }
+        if(s === 4) {
+          $location.path('/bookmarks').replace();
         }
       } else {
         bootbox.alert("You are not logged In");
@@ -157,6 +164,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
         $scope.searchBar.postedDate = todaysDate();
         $scope.searchBar.firstName = localStorage.userName;
         $scope.searchBar.lastName = localStorage.lastName;
+        $scope.searchBar.bookmarks = [];
         $http.post('/ask',$scope.searchBar).then(function(status){
           if(status.data === "error") {
             bootbox.alert("Sorry, something went wrong.\nQuestion could not be posted")
@@ -201,6 +209,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
             $scope.dets["postedDate"] = status.data[j].postedDate;
             $scope.dets["firstName"] = status.data[j].firstName;
             $scope.dets["lastName"] = status.data[j].lastName;
+            $scope.dets["bookmarks"] = status.data[j].bookmarks;
+            $scope.dets["bookmarked"] = false;
             cntlr.forumDetails.push($scope.dets);
             $scope.mail = {};
             $scope.mail["email"] = status.data[j].email;
@@ -242,6 +252,8 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
             $scope.item["quesLname"] = cntlr.forumDetails[i].lastName;
             $scope.item["quesDate"] = cntlr.forumDetails[i].postedDate;
             $scope.item["quesEmail"] = cntlr.forumDetails[i].email;
+            $scope.item["quesBookmarks"] = cntlr.forumDetails[i].bookmarks;
+            $scope.item["quesBookmarked"] = false;
             cntlr.ansTemp = [];					//IMPORTANT
             for(j=0;j<status.data.length;j++) {
               if(cntlr.forumDetails[i].questionId === status.data[j].quesId) {
@@ -267,6 +279,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
           }
           console.log("COMPLETE FORUM DATA-->",cntlr.ansData);
           cntlr.userLikes();
+          cntlr.isBookmarked();
         }
       });
     };
@@ -413,6 +426,7 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
               $scope.dets["postedDate"] = status.data[j].postedDate;
               $scope.dets["firstName"] = status.data[j].firstName;
               $scope.dets["lastName"] = status.data[j].lastName;
+              $scope.dets["bookmarks"] = status.data[j].bookmarks;
               cntlr.forumDetails.push($scope.dets);
               $scope.mail = {};
               $scope.mail["email"] = status.data[j].email;
@@ -424,7 +438,105 @@ app.controller('userController',['$http','$scope','$window','$location','dataSer
           cntlr.ansInfo();
         }
       });
-    }
+    };
+
+    cntlr.setBookmark = function(question) {
+      var temp = {
+        question: question,
+        email: localStorage.email
+      };
+      $http.post('/setbookmark',temp).then(function(status) {
+        if(status.data === "error") {
+          bootbox.alert("Sorry...Bookmark could not be set");
+        } else {
+          bootbox.alert("Bookmark set successfully");
+          for(i=0;i<cntlr.ansData.length;i++) {
+            if(cntlr.ansData[i].question === temp.question) {
+              cntlr.ansData[i].bookmarked = true;
+              cntlr.ansData[i].quesBookmarks = [];
+              cntlr.ansData[i].quesBookmarks = status.data[0].bookmarks;
+              console.log(cntlr.ansData[i].quesBookmarks);
+            }
+          }
+        }
+      });
+    };
+
+    cntlr.removeBookmark = function(question) {
+      var temp = {
+        question: question,
+        email: localStorage.email
+      };
+      $http.post('/removebookmark',temp).then(function(status) {
+        if(status.data === "error") {
+          bootbox.alert("Sorry...Bookmark could not be removed");
+        } else {
+          bootbox.alert("Bookmark removed successfully");
+          for(i=0;i<cntlr.ansData.length;i++) {
+            if(cntlr.ansData[i].question === temp.question) {
+              cntlr.ansData[i].bookmarked = false;
+              cntlr.ansData[i].quesBookmarks = [];
+              cntlr.ansData[i].quesBookmarks = status.data[0].bookmarks;
+              console.log(cntlr.ansData[i].quesBookmarks);
+            }
+          }
+        }
+      });
+    };
+
+    cntlr.isBookmarked = function() {
+      console.log("q");
+      for(i=0;i<cntlr.ansData.length;i++) {
+        for(j=0;j<cntlr.ansData[i].quesBookmarks.length;j++) {
+          if(cntlr.ansData[i].quesBookmarks[j] === localStorage.email) {
+            cntlr.ansData[i].bookmarked = true;
+            console.log("q");
+          }
+        }
+      }
+    };
+
+    cntlr.getBookmarks = function() {
+      var j = 0;
+      var k = 0;
+      cntlr.forumDetails = [];
+      cntlr.ansData = [];
+      $http.get('/quesdata').then(function(status){
+        if(status.data === "error") {
+          console.log("BOOKMARKS CANNOT BE LOADED")
+        } else {
+          console.log("BOOKMARKS LOADED");
+          console.log(status.data);
+          for(j=0;j<status.data.length;j++) {
+            var flag = 0;
+            for(k=0;k<status.data[j].bookmarks.length;k++) {
+              if(status.data[j].bookmarks[k] === localStorage.email) {
+                flag = 1;
+              }
+            }
+            if (flag === 1) {
+              $scope.dets = {};
+              $scope.dets["questionId"] = status.data[j]._id
+              $scope.dets["question"] =  status.data[j].question;
+              $scope.dets["userId"] = status.data[j].userId;
+              $scope.dets["email"] = status.data[j].email;
+              $scope.dets["postedDate"] = status.data[j].postedDate;
+              $scope.dets["firstName"] = status.data[j].firstName;
+              $scope.dets["lastName"] = status.data[j].lastName;
+              $scope.dets["bookmarks"] = status.data[j].bookmarks;
+              cntlr.forumDetails.push($scope.dets);
+              $scope.mail = {};
+              $scope.mail["email"] = status.data[j].email;
+              $scope.id.push($scope.mail);
+            }
+          };
+          $scope.user();
+          console.log("Your Question Details-->",cntlr.forumDetails);
+          cntlr.ansInfo();
+        }
+      });
+    };
+
 
   }]);
 

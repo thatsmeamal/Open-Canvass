@@ -22,6 +22,10 @@ app.config(function($routeProvider){
 		templateUrl: 'html/your-content.html'
 	})
 
+	.when('/bookmarks', {
+		templateUrl: 'html/bookmarks.html'
+	})
+
 	.when('/admin', {
 		templateUrl: 'html/admin.html',
 		controller: 'adminController'
